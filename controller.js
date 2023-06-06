@@ -21,13 +21,10 @@ class Controller {
   
   async getUroks(token_user) {
     return new Promise((resolve, reject) => {
-      // Проверка авторизации пользователя с использованием переданного токена token_user
       if (!token_user) {
         reject(new Error('Unauthorized'));
         return;
       }
-      
-      // Получение соединения из пула
       pool.getConnection((err, connection) => {
         if (err) {
           console.error('Database connection error:', err);
@@ -228,24 +225,24 @@ async createUser(id_user, FirstName, LastName, login, password) {
 
   
   
-    async getIdUserByToken(token_user) {
-        console.log(token_user);
-        return new Promise((resolve, reject) => {
-            connection.query(
-                'SELECT id_user FROM user WHERE token_user = ?',
-                [
-                    token_user,
-                ],
-                (err, results, fields) => {
-                    if (err) {
-                        reject(err);
-                    } else {
-                        resolve(results[0].id_user);
-                    }
-                });
-        }
-        )
-    }
+    // async getIdUserByToken(token_user) {
+    //     console.log(token_user);
+    //     return new Promise((resolve, reject) => {
+    //         connection.query(
+    //             'SELECT id_user FROM user WHERE token_user = ?',
+    //             [
+    //                 token_user,
+    //             ],
+    //             (err, results, fields) => {
+    //                 if (err) {
+    //                     reject(err);
+    //                 } else {
+    //                     resolve(results[0].id_user);
+    //                 }
+    //             });
+    //     }
+    //     )
+    // }
 
     async logout(token_user) {
         const promise = this.getIdUserByToken(token_user);
