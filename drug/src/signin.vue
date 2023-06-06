@@ -48,7 +48,7 @@ export default {
             currentObject.error = res.error;
           } else {
             localStorage.setItem("token", res.token_user);
-            currentObject.$emit("enter"); // Вызовите событие enter, чтобы родительский компонент обработал перенаправление
+            currentObject.$emit("enter"); 
           }
         })
         .catch(function(error) {
