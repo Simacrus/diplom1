@@ -35,12 +35,9 @@ export default {
   created() {
     const token = localStorage.getItem('token');
     if (!token) {
-      // Если токена нет, перенаправляем на страницу авторизации
       this.$router.push('/signin');
     } else {
-      // Если токен есть, выполняем запрос на получение данных
       this.getUroks(token);
-      // Устанавливаем периодическое обновление данных каждые 5 секунд
       setInterval(() => {
         this.getUroks(token);
       }, 5000);
