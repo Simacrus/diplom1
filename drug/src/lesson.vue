@@ -16,55 +16,46 @@
       </div>
     </div>
 
-    <!-- <div @showLesson="showLesson">
-       
-    </div> -->
-
-    
-
-    <!-- <div class="container">
-      <div class="content"></div>
-      <a @click="Lesson" v-for="urok in uroks" :key="urok.id" class="block" :href="'/lesson/' + urok.id_urok">  
-        <h1>{{ urok.name }}</h1>
-        <a>{{ urok.text }}</a> 
-        </a>
-    </div> -->
-  </div> 
+    <div class="lesson">
+      <div v-if="lessonData" class="lesson_content">  
+        <h1>{{ lessonData.name }}</h1>
+        <a>{{ lessonData.text }}</a> 
+      </div>
+    </div>
+  </div>
 </template>
 
 <script>
 export default {
-    props: {
-        lesson: { type: String }
-    },
-    data() {
-
-    },
-    mounted() {
-        // load the data from the database
-    },
-    methods: {
-        loadLesson() {
-      const currentObject = this;
-      fetch('http://localhost:5000/lessons', {
+  props: {
+    lesson: { type: String }
+  },
+  data() {
+    return {
+      lessonData: null
+    };
+  },
+  mounted() {
+    this.loadLesson();
+  },
+  methods: {
+    loadLesson() {
+      fetch(`http://localhost:5000/lessons/${this.lesson}`, {
         headers: {
-          "Authorization": token
+          Authorization: "a"
         }
       })
         .then(response => response.json())
         .then(data => {
-    this.lessons = data.map(lesson => {
-        return {
-            ...lesson,
-            id: lesson._id
-            }
-          });
+          console.log(data);
+          this.lessonData = data;
         })
         .catch(error => {
-          console.error('Error fetching uroks:', error);
+          console.error("Error fetching uroks:", error);
         });
-
-        }
     }
+  }
 }
 </script>
+
+<style src="./styles.css" scoped></style>
